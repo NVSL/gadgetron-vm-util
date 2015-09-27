@@ -41,7 +41,7 @@ fi
 cd Gadgetron
 ./update_gadgets
 cd Gadgets/Tools/jet_2/
-yes y | dev_appserver.py ./ &
+yes y | dev_appserver.py ./ 2>&1 > GAE.log &
 sleep 1;
 nohup google-chrome http://localhost:8080 &
 
