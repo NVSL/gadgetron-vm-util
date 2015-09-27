@@ -52,7 +52,8 @@ sudo pip install cython lxml pypng beautifulsoup4 requests svgwrite Mako clang b
 
 
 echo "Installing Google app engine..."
-wget -O google_appengine_1.9.26.zip https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.26.zipunzip google_appengine_1.9.26.zip
+wget -O google_appengine_1.9.26.zip https://storage.googleapis.com/appengine-sdks/featured/google_appengine_1.9.26.zip
+unzip google_appengine_1.9.26.zip
 sudo mv google_appengine /usr/local/
-echo PATH=\$PATH:/usr/local/google_appengine >> /etc/profile
+sudo bash -c 'echo PATH=\$PATH:/usr/local/google_appengine >> /etc/profile'
 
