@@ -44,7 +44,7 @@ kill $(ps aux | grep dev_appserver.py | grep -v grep | perl -ne 's/\s+/ /g; @a =
 cd Gadgetron
 ./update_gadgets
 cd Gadgets/Tools/jet_2/
-yes y | dev_appserver.py ./ 2>&1 > GAE.log &
+yes y | dev_appserver.py ./  > GAE.log 2>&1  &
 sleep 1;
 nohup google-chrome http://localhost:8080 &
 
