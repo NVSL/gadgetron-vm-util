@@ -1,13 +1,13 @@
 #!/bin/bash
     
 
-if ! [ -e "Gadgetron" -a -e ".ssh/id_rsa.pub" ]; then
+if ! [ -e "./Gadgetron" -a -e ".ssh/id_rsa.pub" ]; then
     echo Enter your NVSL lab username:
     read user
 fi
     
     
-if ! [ -e ".ssh/id_rsa.pub" ]; then 
+if ! [ -e "~/.ssh/id_rsa.pub" ]; then 
     echo "Generating public key (accept all the defaults):"
     ssh-keygen
     eval `ssh-agent`
