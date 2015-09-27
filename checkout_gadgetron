@@ -1,7 +1,7 @@
 #!/bin/bash
     
 
-if ! [ -e "./Gadgetron" -a -e ".ssh/id_rsa.pub" ]; then
+if ! [ -e "./Gadgetron" -a -e "~/.ssh/id_rsa.pub" ]; then
     echo Enter your NVSL lab username:
     read user
 fi
