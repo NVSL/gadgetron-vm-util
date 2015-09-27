@@ -38,6 +38,9 @@ if ! [ -d "Gadgetron" ]; then
     ./initial_setup gadgets
     source setup_gadgets)
 fi
+
+kill $(ps aux | grep dev_appserver.py | grep -v grep | perl -ne 's/\s+/ /g; @a = split(" "); print $a[1]')
+
 cd Gadgetron
 ./update_gadgets
 cd Gadgets/Tools/jet_2/
