@@ -40,8 +40,8 @@ sudo apt-get -y install python-pip libspatialindex-dev python-pygame libcgal-dev
 #sudo apt-get remove arduino #  It's the wrong version, but it gives us all the support libs (E.g., java)
 
 banner "Get latest pip"
-sudo pip install -U pip
-sudo pip install -U pip
+sudo -H pip install -U pip
+sudo -H pip install -U pip
 
 #Install latest version of arduino:
 banner "Installing latest version of Arduino..."
@@ -58,8 +58,7 @@ banner "Installing python virtualenv..."
 #install virtualenv
 sudo pip install virtualenv
 
-banner "Installing cgal bindings (this will take a while)..."
-#install virtualenv
+#banner "Installing cgal bindings (this will take a while)..."
 #sudo pip install --upgrade --no-cache-dir --force-reinstall  cgal-bindings
 
 #install global javascript resources
@@ -72,7 +71,7 @@ sudo chgrp -R gadgetron ~/.npm
 
 banner "Installing python packages..."
 # optionally install python stuff globally.
-sudo pip install cython lxml pypng beautifulsoup4 requests svgwrite Mako clang bintrees numpy jinja2e Sphinx asciitree rtree pyparsing
+sudo pip install cython lxml pypng beautifulsoup4 requests svgwrite Mako clang bintrees numpy jinja2 Sphinx asciitree rtree pyparsing
 #cgal-bindings
 
 banner "Installing Google app engine..."
