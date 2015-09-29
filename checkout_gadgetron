@@ -20,7 +20,7 @@ function request () {
 # Get latest version
 if ! [ "$1." = "up-to-date." ]; then
 
-    wget -O checkout_gadgetron -o update.log https://github.com/NVSL/gadgetron-vm-util/raw/master/checkout_gadgetron;
+    wget --no-cache -O checkout_gadgetron -o update.log https://github.com/NVSL/gadgetron-vm-util/raw/master/checkout_gadgetron;
     chmod u+x checkout_gadgetron ;
     exec ./checkout_gadgetron up-to-date
 fi
