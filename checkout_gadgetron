@@ -43,8 +43,12 @@ kill $(ps aux | grep dev_appserver.py | grep -v grep | perl -ne 's/\s+/ /g; @a =
 
 cd Gadgetron
 ./update_gadgets
-cd Gadgets/Tools/jet_2/
-yes y | dev_appserver.py ./  > GAE.log 2>&1  &
-sleep 1;
-nohup google-chrome http://localhost:8080 &
 
+banner Done!
+
+request Execute the following commands to start Jet, then point your browser at http://localhost:8080
+
+echo "(cd Gadgets/Tools/jet_2/;dev_appserver.py ./)"
+
+#sleep 1;
+#nohup google-chrome http://localhost:8080 &
