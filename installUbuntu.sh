@@ -56,7 +56,7 @@ sudo ln -sf /usr/local/arduino-1.6.4/arduino /usr/local/bin/
 
 banner "Installing python virtualenv..."
 #install virtualenv
-sudo pip install virtualenv
+sudo -H pip install virtualenv
 
 #banner "Installing cgal bindings (this will take a while)..."
 #sudo pip install --upgrade --no-cache-dir --force-reinstall  cgal-bindings
@@ -87,6 +87,17 @@ rm -rf gadgetron-vm-util
 git clone git@github.com:NVSL/gadgetron-vm-util.git
 rm -rf gadgetron-vm-util
 
+banner Configuring ssh
+
+mkdir ~/.ssh
+cat > ~/.ssh/config  <<EOF
+Host bb-*
+Port 425
+Host bbfs-*
+Port 425
+EOF
+
+chmod og-rwx -R ~/.ssh
 
 banner "All done!!!"
 
