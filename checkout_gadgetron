@@ -1,25 +1,50 @@
 #!/bin/bash
     
 
+function banner () {
+    echo
+    echo "========================================================"
+    echo $1
+    echo "========================================================"
+    echo
+}
+
+function request () {
+    echo
+    echo "===================== TAKE ACTION! ====================="
+    echo $1
+    echo "========================================================"
+    echo
+}
+
+# Get latest version
+if ! [ "$1." = "up-to-date." ]; then
+    wget https://github.com/NVSL/gadgetron-vm-util/raw/master/checkout_gadgetron;
+    chmod u+x checkout_gadgetron ;
+    exec ./checkout_gadgetron up-to-date
+fi
+
+# get sudo permision early.
+sudo true
+
 if ! [ -e "./Gadgetron" -a -e ~/.ssh/id_rsa.pub ]; then
-    echo Enter your NVSL lab username:
+    request Enter your NVSL lab username:
     read user
 fi
     
     
 if ! [ -e ~/.ssh/id_rsa.pub ]; then 
-    echo "Generating public key (accept all the defaults):"
+    request "Generating public key.  Please accept all the defaults"
     ssh-keygen
     eval `ssh-agent`
     ssh-add
-    echo "Provide NVSL password to transfer pub key to svn repo"
+    request "Provide NVSL password to transfer pub key to svn repo"
     cat .ssh/id_rsa.pub | ssh $user@bbfs-01.calit2.net "cat >> .ssh/authorized_keys"
 
-    echo -ne 'Visit https://github.com/settings/ssh, and add this key by copying and pasting it into the space provided.  Give it a meaningful name, like "Gadgetron Development Key":\n\n'
+    request  'Visit https://github.com/settings/ssh, and add this key by copying and pasting it into the space provided.  Give it a meaningful name, like "Gadgetron Development Key"'
     cat .ssh/id_rsa.pub
 
-    echo -ne "\n\n"
-    echo "PRESS RETURN WHEN YOU HAVE DONE SO. (waiting...)"
+    request "PRESS RETURN WHEN YOU HAVE DONE SO. (waiting...)"
     read junk
     
 fi
@@ -27,9 +52,7 @@ fi
 eval `ssh-agent`
 ssh-add
 
-
-echo "Checking out and building gadgetron (accept all the default, if asked):"
-
+banner "Checking out and building gadgetron:"
 
 if ! [ -d "Gadgetron" ]; then
     mkdir Gadgetron
@@ -44,6 +67,9 @@ kill $(ps aux | grep dev_appserver.py | grep -v grep | perl -ne 's/\s+/ /g; @a =
 cd Gadgetron
 ./update_gadgets
 cd Gadgets/Tools/jet_2/
+
+banner Starting Jet
+
 yes y | dev_appserver.py ./  > GAE.log 2>&1  &
 sleep 1;
 nohup google-chrome http://localhost:8080 &
