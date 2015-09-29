@@ -71,7 +71,7 @@ cd Gadgetron
 
 banner Done!
 
-request Type 'make run' to start jet.
+request "Type 'make run' to start jet."
 
 
 #sleep 1;
