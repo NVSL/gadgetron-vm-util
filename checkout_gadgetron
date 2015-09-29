@@ -4,7 +4,7 @@
 function banner () {
     echo
     echo "========================================================"
-    echo $1
+    echo $@
     echo "========================================================"
     echo
 }
@@ -12,7 +12,7 @@ function banner () {
 function request () {
     echo
     echo "===================== TAKE ACTION! ====================="
-    echo $1
+    echo $@
     echo "========================================================"
     echo
 }
@@ -29,7 +29,7 @@ fi
 sudo true
 
 if ! [ -e "./Gadgetron" -a -e ~/.ssh/id_rsa.pub ]; then
-    request Enter your NVSL lab username:
+    request "Enter your NVSL lab username:"
     read user
 fi
     
