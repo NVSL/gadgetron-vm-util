@@ -66,11 +66,11 @@ kill $(ps aux | grep dev_appserver.py | grep -v grep | perl -ne 's/\s+/ /g; @a =
 
 cd Gadgetron
 ./update_gadgets
-cd Gadgets/Tools/jet_2/
 
-banner Starting Jet
+banner Done!
 
-yes y | dev_appserver.py ./  > GAE.log 2>&1  &
-sleep 1;
-nohup google-chrome http://localhost:8080 &
+request Type 'make run' to start jet.
 
+
+#sleep 1;
+#nohup google-chrome http://localhost:8080 &
