@@ -24,27 +24,30 @@ function request () {
     echo
 }
 
+function error () {
+    echo
+    echo "===================== FAILURE: ========================="
+    echo $1
+    echo "========================================================"
+    exit
+}
+
 
 if ! [ -e /usr/local/bin/brew ]; then
     request "You need to install brew.  \nThis will clash if you have another package manager installed, so I am not going to do it automatically.\nYou can do it with 'ruby -e \"\$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\"'"
     exit ;
 fi
 
-request "Checking for Xcode.  If a window appears asking if you want to install XCode.  Go ahead and instalt it."
-
-if ! gcc /dev/null -c -o /dev/null 2>&1; then
-    gcc
-fi
 
 banner Installing Brew packages
 
 brew tap homebrew/x11
-brew install python spatialindex cgal swig sdl sdl_image sdl_mixer sdl_ttf portmidi hg inkscape curl nodejs libxml2 libxslt wget 
+brew install python spatialindex cgal swig sdl sdl_image sdl_mixer sdl_ttf portmidi hg inkscape curl nodejs libxml2 libxslt wget || error Brew failed
 
 # install 32-bit eagle (didn’t need any of the apt-get craziness on wiki)
 banner "Installing Eagle..."
-http://web.cadsoft.de/ftp/eagle/program/7.4/eagle-mac64-7.4.0.zip
-unzip eagle-mac64-7.4.0.zip
+wget -O eagle-mac64-7.4.0.zip http://web.cadsoft.de/ftp/eagle/program/7.4/eagle-mac64-7.4.0.zip || error Downloading eagle failed
+unzip eagle-mac64-7.4.0.zip || error Uncompressing eagle failed
 open eagle-mac64-7.4.0.pkg
 
 request "Please complete the Eagle installer, and then press return"
@@ -63,9 +66,9 @@ read junk
 
 #Install latest version of arduino:
 banner "Installing latest version of Arduino..."
-wget -O arduino-1.6.4-macosx.zip http://arduino.cc/download.php?f=/arduino-1.6.4-macosx.zip
-unzip arduino-1.6.4-macosx.zip
-mv Arduino.app /Applications/
+wget -O arduino-1.6.4-macosx.zip http://arduino.cc/download.php?f=/arduino-1.6.4-macosx.zip || error Downloading Arduino failed.
+unzip arduino-1.6.4-macosx.zip || error Unzipping Arduino failed.
+mv Arduino.app /Applications/ || error Installing ARduino failed.
 
 #install Arduino
 
@@ -80,26 +83,27 @@ mv Arduino.app /Applications/
 
 banner "Installing python virtualenv..."
 #install virtualenv
-pip install virtualenv
+pip install virtualenv || error Installing virtualenv failed.
 
 #banner "Installing cgal bindings (this will take a while)..."
 #sudo pip install --upgrade --no-cache-dir --force-reinstall  cgal-bindings
 
 #install global javascript resources
 banner "Installing global javascript resources..."
-npm install -g bower tsd grunt grunt-cli 
+npm install -g bower tsd grunt grunt-cli  || error NPM installs failed.
 
 #banner "Installing python packages..."
 # optionally install python stuff globally.
-pip install cython lxml pypng beautifulsoup4 requests svgwrite Mako clang bintrees numpy jinja2 Sphinx asciitree rtree pyparsing
-#cgal-bindings
+pip install --upgrade pip setuptools || error pip upgrade failed.
+pip install cython lxml pypng beautifulsoup4 requests svgwrite Mako clang bintrees numpy jinja2 Sphinx asciitree rtree pyparsing || error pip install failed.
+#cgal-bindings 
 
 banner "Installing Google app engine..."
 
-wget -O GoogleAppEngineLauncher-1.9.27.dmg https://storage.googleapis.com/appengine-sdks/featured/GoogleAppEngineLauncher-1.9.27.dmg
-open GoogleAppEngineLauncher-1.9.27.dmg
+wget -O GoogleAppEngineLauncher-1.9.27.dmg https://storage.googleapis.com/appengine-sdks/featured/GoogleAppEngineLauncher-1.9.27.dmg || error Downloading GAE failed
+open GoogleAppEngineLauncher-1.9.27.dmg || error Mounting GAE Disk image failed.
 
-request "Copy the app into the your Applications folder.  Press return when done"
+request "Copy the Google App Engine Launcher app into the your Applications folder.  Press return when done"
 read junk
 
 request "Click 'yes' when Google App Engine asks about creating symlinks."
@@ -114,9 +118,9 @@ open /Applications/GoogleAppEngineLauncher.app
 
 
 #mkdir ~/.ssh
-if ! grep bb- ~/.ssh/config; then 
+if ! [ -e ~/.ssh/config ] || ! grep bb- ~/.ssh/config; then 
     banner Configuring ssh
-    cat > ~/.ssh/config  <<EOF
+    cat >> ~/.ssh/config  <<EOF
 Host bb-*
 Port 425
 Host bbfs-*
