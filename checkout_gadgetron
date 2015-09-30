@@ -17,12 +17,24 @@ function request () {
     echo
 }
 
+function error () {
+    echo
+    echo "===================== ERROR! ==========================="
+    echo $@
+    echo "========================================================"
+    exit 1
+}
+
 # Get latest version
 if ! [ "$1." = "up-to-date." ]; then
 
     wget --no-cache -O checkout_gadgetron -o update.log https://github.com/NVSL/gadgetron-vm-util/raw/master/checkout_gadgetron;
     chmod u+x checkout_gadgetron ;
     exec ./checkout_gadgetron up-to-date
+fi
+
+if [ ".$USE_VENV" = "." ] && [ "$1." != "--novenv." ] ; then
+    error "USE_VENV is not set to 'yes'.  Please do 'export $USE_VENV=yes' and re-run. If you really don't want to use a virtual environminte, then do 'checkout_gadgetron --nonvenv'"
 fi
 
 # get sudo permision early.
