@@ -38,7 +38,6 @@ if ! [ -e /usr/local/bin/brew ]; then
     exit ;
 fi
 
-
 banner Installing Brew packages
 
 brew tap homebrew/x11
@@ -53,50 +52,24 @@ open eagle-mac64-7.4.0.pkg
 request "Please complete the Eagle installer, and then press return"
 read junk
 
-#/opt/eagle-7.4.0/bin/eagle # click ok about creating the directory.
-
-#install system-wide packages
-#banner "Installing system-wide packages (this will take a while)..."
-#sudo apt-get -y install python-pip libspatialindex-dev python-pygame libcgal-dev swig inkscape curl nodejs npm subversion emacs git cython python-lxml npm swig libpython-dev libxml2 libxml2-dev libxslt1-dev arduino vim
-#sudo apt-get remove arduino #  It's the wrong version, but it gives us all the support libs (E.g., java)
-
-#banner "Get latest pip"
-#sudo -H pip install -U pip
-#sudo -H pip install -U pip
-
 #Install latest version of arduino:
 banner "Installing latest version of Arduino..."
 wget -O arduino-1.6.4-macosx.zip http://arduino.cc/download.php?f=/arduino-1.6.4-macosx.zip || error Downloading Arduino failed.
 unzip arduino-1.6.4-macosx.zip || error Unzipping Arduino failed.
 mv Arduino.app /Applications/ || error Installing ARduino failed.
 
-#install Arduino
-
-#wget -O arduino-1.6.4-linux32.tar.xz http://arduino.cc/download.php?f=/arduino-1.6.4-linux32.tar.xz
-#sudo tar xf arduino-1.6.4-linux32.tar.xz -C  /usr/local/ 
-#sudo ln -sf /usr/local/arduino-1.6.4/arduino /usr/local/bin/
-
-#echo
-#echo "Arduino is is going to ask you if you want be added to the dialout group.  Say yes, then exit."
-#echo
-#arduino  # click “add” when it asks you about the “dial up group”
 
 banner "Installing python virtualenv..."
 #install virtualenv
 pip install virtualenv || error Installing virtualenv failed.
-
-#banner "Installing cgal bindings (this will take a while)..."
-#sudo pip install --upgrade --no-cache-dir --force-reinstall  cgal-bindings
 
 #install global javascript resources
 banner "Installing global javascript resources..."
 npm install -g bower tsd grunt grunt-cli  || error NPM installs failed.
 
 #banner "Installing python packages..."
-# optionally install python stuff globally.
 pip install --upgrade pip setuptools || error pip upgrade failed.
 pip install cython lxml pypng beautifulsoup4 requests svgwrite Mako clang bintrees numpy jinja2 Sphinx asciitree rtree pyparsing || error pip install failed.
-#cgal-bindings 
 
 banner "Installing Google app engine..."
 
@@ -110,14 +83,6 @@ request "Click 'yes' when Google App Engine asks about creating symlinks."
 
 open /Applications/GoogleAppEngineLauncher.app
 
-#request "Making github work easily (say 'yes')"
-#git clone git@github.com:NVSL/gadgetron-vm-util.git
-#rm -rf gadgetron-vm-util
-#git clone git@github.com:NVSL/gadgetron-vm-util.git
-#rm -rf gadgetron-vm-util
-
-
-#mkdir ~/.ssh
 if ! [ -e ~/.ssh/config ] || ! grep bb- ~/.ssh/config; then 
     banner Configuring ssh
     cat >> ~/.ssh/config  <<EOF
