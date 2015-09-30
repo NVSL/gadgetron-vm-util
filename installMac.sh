@@ -30,6 +30,12 @@ if ! [ -e /usr/local/bin/brew ]; then
     exit ;
 fi
 
+request "Checking for Xcode.  If a window appears asking if you want to install XCode.  Go ahead and instalt it."
+
+if ! gcc /dev/null -c -o /dev/null 2>&1; then
+    gcc
+fi
+
 banner Installing Brew packages
 
 brew tap homebrew/x11
@@ -95,6 +101,10 @@ open GoogleAppEngineLauncher-1.9.27.dmg
 
 request "Copy the app into the your Applications folder.  Press return when done"
 read junk
+
+request "Click 'yes' when Google App Engine asks about creating symlinks."
+
+open /Applications/GoogleAppEngineLauncher.app
 
 #request "Making github work easily (say 'yes')"
 #git clone git@github.com:NVSL/gadgetron-vm-util.git

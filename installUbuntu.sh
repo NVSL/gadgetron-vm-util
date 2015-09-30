@@ -89,7 +89,7 @@ rm -rf gadgetron-vm-util
 
 banner Configuring ssh
 
-mkdir ~/.ssh
+#mkdir ~/.ssh
 cat > ~/.ssh/config  <<EOF
 Host bb-*
 Port 425
@@ -98,6 +98,14 @@ Port 425
 EOF
 
 chmod og-rwx -R ~/.ssh
+
+echo export USE_VENV=yes >> ~/.bashrc
+
+cat >> ~/.bashrc <<EOF
+echo
+echo "To start gadgetron installation, run './checkout_gadgetron'"
+echo
+EOF
 
 banner "All done!!!"
 
